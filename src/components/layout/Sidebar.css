@@ -28,6 +28,34 @@
   display: none;
 }
 
+.sidebar[data-collapsed="true"] .sidebar-header {
+  justify-content: center;
+  padding: var(--luma-space-4) 0;
+}
+
+.sidebar[data-collapsed="true"] .sidebar-logo {
+  display: none;
+}
+
+.sidebar[data-collapsed="true"] .sidebar-collapse-btn {
+  width: 36px;
+  height: 36px;
+}
+
+.sidebar[data-collapsed="true"] .sidebar-nav {
+  padding: 0 var(--luma-space-1);
+}
+
+.sidebar[data-collapsed="true"] .sidebar-item {
+  justify-content: center;
+  padding: var(--luma-space-2);
+}
+
+.sidebar[data-collapsed="true"] .sidebar-shortcut-hint {
+  justify-content: center;
+  padding: var(--luma-space-2);
+}
+
 .sidebar-lists {
   display: flex;
   flex-direction: column;
