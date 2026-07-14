@@ -46,47 +46,7 @@
   box-shadow: var(--luma-shadow-sm);
 }
 
-.tasks-toolbar-right {
-  display: flex;
-  align-items: center;
-  gap: var(--luma-space-3);
-}
 
-.tasks-sort {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.tasks-sort-label {
-  font-size: var(--luma-text-xs);
-  color: var(--luma-text-ghost);
-}
-
-.tasks-sort-select {
-  background: var(--luma-bg-surface);
-  border: 1px solid var(--luma-border-subtle);
-  border-radius: var(--luma-radius-md);
-  padding: 4px 8px;
-  font-size: var(--luma-text-xs);
-  color: var(--luma-text-secondary);
-  cursor: pointer;
-  outline: none;
-  transition: var(--luma-transition-colors);
-}
-
-.tasks-sort-select:hover {
-  border-color: var(--luma-border-medium);
-}
-
-.tasks-sort-select:focus {
-  border-color: var(--luma-accent);
-}
-
-.tasks-sort-select option {
-  background: var(--luma-bg-elevated);
-  color: var(--luma-text-primary);
-}
 
 .tasks-toggle-completed {
   padding: 4px 10px;
@@ -108,4 +68,37 @@
   color: var(--luma-accent-text);
   background: var(--luma-accent-muted);
   border-color: transparent;
+}
+
+/* My Day progress */
+.tasks-myday-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--luma-space-3);
+  margin-bottom: var(--luma-space-4);
+}
+
+.tasks-myday-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--luma-bg-hover);
+  border-radius: var(--luma-radius-full);
+  overflow: hidden;
+}
+
+.tasks-myday-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--luma-accent), var(--luma-success));
+  border-radius: var(--luma-radius-full);
+  transition: width 600ms var(--luma-ease-out);
+  min-width: 2px;
+}
+
+.tasks-myday-progress-text {
+  font-size: var(--luma-text-xs);
+  font-weight: var(--luma-font-medium);
+  color: var(--luma-text-tertiary);
+  white-space: nowrap;
+  min-width: 52px;
+  text-align: right;
 }

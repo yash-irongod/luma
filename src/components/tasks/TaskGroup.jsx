@@ -45,7 +45,7 @@ function SortableTaskItem({ task }) {
   );
 }
 
-export default function TaskGroup({ label, tasks, defaultOpen = true, accentColor }) {
+export default function TaskGroup({ label, tasks, defaultOpen = true, accentColor, onReorder }) {
   const [open, setOpen] = useState(defaultOpen);
   const reorderTasks = useTaskStore(s => s.reorderTasks);
 
@@ -71,6 +71,7 @@ export default function TaskGroup({ label, tasks, defaultOpen = true, accentColo
     reordered.splice(oldIndex, 1);
     reordered.splice(newIndex, 0, active.id);
     reorderTasks(reordered);
+    onReorder?.();
   };
 
   return (

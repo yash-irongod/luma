@@ -24,14 +24,22 @@ export default function HomePage() {
   const activeTasks = useMemo(() => tasks.filter(t => !t.completed), [tasks]);
   const completedTasks = useMemo(() => tasks.filter(t => t.completed), [tasks]);
 
+  const allMyDayTasks = useMemo(() => {
+    return tasks.filter(t => t.focusToday || (t.dueDate && isToday(t.dueDate)));
+  }, [tasks]);
+
   const myDayTasks = useMemo(() => {
-    return activeTasks
-      .filter(t => t.focusToday || (t.dueDate && isToday(t.dueDate)))
+    return allMyDayTasks
+      .filter(t => !t.completed)
       .sort((a, b) => {
         const order = { urgent: 0, high: 1, medium: 2, low: 3, none: 4 };
         return (order[a.priority] ?? 4) - (order[b.priority] ?? 4);
       });
-  }, [activeTasks]);
+  }, [allMyDayTasks]);
+
+  const myDayDone = useMemo(() => allMyDayTasks.filter(t => t.completed).length, [allMyDayTasks]);
+  const myDayTotal = allMyDayTasks.length;
+  const myDayPercent = myDayTotal > 0 ? Math.round((myDayDone / myDayTotal) * 100) : 0;
 
   const overdueTasks = useMemo(() => {
     const today = new Date();
@@ -97,8 +105,25 @@ export default function HomePage() {
                   View all <ArrowRight size={14} />
                 </Link>
               </div>
-              {myDayTasks.length === 0 ? (
+
+              {myDayTotal > 0 && (
+                <div className="home-myday-progress">
+                  <div className="home-myday-progress-bar">
+                    <div
+                      className="home-myday-progress-fill"
+                      style={{ width: `${myDayPercent}%` }}
+                    />
+                  </div>
+                  <span className="home-myday-progress-text">
+                    {myDayDone}/{myDayTotal} done
+                  </span>
+                </div>
+              )}
+
+              {myDayTasks.length === 0 && myDayTotal === 0 ? (
                 <p className="home-section-empty">No tasks for today. Add tasks and mark them as "My Day" to plan your focus.</p>
+              ) : myDayTasks.length === 0 ? (
+                <p className="home-section-empty" style={{ borderColor: 'rgba(108,107,240,0.2)', background: 'var(--luma-accent-muted)', color: 'var(--luma-accent-text)' }}>All done for today! 🎉</p>
               ) : (
                 <div className="home-task-list">
                   <AnimatePresence>

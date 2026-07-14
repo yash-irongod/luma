@@ -117,6 +117,39 @@
   border: 1px dashed var(--luma-border-subtle);
 }
 
+/* My Day progress */
+.home-myday-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--luma-space-3);
+  margin-bottom: var(--luma-space-3);
+}
+
+.home-myday-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--luma-bg-hover);
+  border-radius: var(--luma-radius-full);
+  overflow: hidden;
+}
+
+.home-myday-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--luma-accent), var(--luma-success));
+  border-radius: var(--luma-radius-full);
+  transition: width 600ms var(--luma-ease-out);
+  min-width: 2px;
+}
+
+.home-myday-progress-text {
+  font-size: var(--luma-text-xs);
+  font-weight: var(--luma-font-medium);
+  color: var(--luma-text-tertiary);
+  white-space: nowrap;
+  min-width: 52px;
+  text-align: right;
+}
+
 /* Task list */
 .home-task-list {
   background: var(--luma-bg-surface);
