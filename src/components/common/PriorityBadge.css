@@ -1,0 +1,26 @@
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--luma-space-1);
+  flex-shrink: 0;
+}
+
+.priority-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--luma-radius-full);
+  flex-shrink: 0;
+}
+
+.priority-dot-small {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--luma-radius-full);
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.priority-label {
+  font-size: var(--luma-text-xs);
+  color: var(--luma-text-tertiary);
+}

@@ -1,0 +1,202 @@
+@import './reset.css';
+@import './tokens.css';
+@import './animations.css';
+@import './editor.css';
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background: var(--luma-bg-base);
+  color: var(--luma-text-secondary);
+  font-family: var(--luma-font-sans);
+  font-size: var(--luma-text-base);
+  line-height: var(--luma-leading-normal);
+}
+
+::selection {
+  background: var(--luma-accent-muted);
+  color: var(--luma-accent-text);
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--luma-bg-hover) transparent;
+}
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: var(--luma-bg-hover);
+  border-radius: var(--luma-radius-full);
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--luma-bg-active); }
+
+/* Focus */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--luma-shadow-glow);
+  border-radius: var(--luma-radius-md);
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* App layout */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+  min-height: 100vh;
+  background: var(--luma-bg-main);
+  transition: margin-left 300ms var(--luma-ease-out);
+}
+
+/* Page container */
+.page-container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--luma-space-8) var(--luma-space-6);
+}
+
+/* Icon button utility */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--luma-radius-md);
+  color: var(--luma-text-tertiary);
+  transition: var(--luma-transition-colors);
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  background: var(--luma-bg-hover);
+  color: var(--luma-text-primary);
+}
+
+/* Note title input */
+.note-title-input {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: var(--luma-text-3xl);
+  font-weight: var(--luma-font-semibold);
+  color: var(--luma-text-primary);
+  letter-spacing: var(--luma-tracking-tight);
+  line-height: var(--luma-leading-tight);
+  margin-bottom: var(--luma-space-4);
+}
+
+.note-title-input::placeholder {
+  color: var(--luma-text-ghost);
+}
+
+/* Responsive — narrow viewports */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 56px !important;
+  }
+
+  .sidebar .sidebar-item-label,
+  .sidebar .sidebar-item-count,
+  .sidebar .sidebar-logo-text,
+  .sidebar .sidebar-section-label,
+  .sidebar .sidebar-kbd,
+  .sidebar .sidebar-add-btn,
+  .sidebar .sidebar-projects,
+  .sidebar .sidebar-lists {
+    display: none;
+  }
+
+  .app-main {
+    margin-left: 56px !important;
+  }
+
+  .page-container {
+    padding: var(--luma-space-6) var(--luma-space-4);
+  }
+
+  .tasks-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tasks-views {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .home-notes-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .home-stats {
+    flex-wrap: wrap;
+    gap: var(--luma-space-3);
+  }
+
+  .settings-export-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-notes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .notes-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .notes-search {
+    max-width: none;
+  }
+
+  .notes-toolbar-right {
+    justify-content: space-between;
+  }
+}
+
+/* Smooth page link transitions */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Keyboard focus only (no mouse focus glow) */
+:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+
+/* Drag overlay state */
+.dragging {
+  box-shadow: var(--luma-shadow-lg);
+  border-radius: var(--luma-radius-md);
+  background: var(--luma-bg-elevated);
+}
+
+/* Prevent text selection while dragging */
+[data-dnd-dragging="true"] {
+  user-select: none;
+}
+

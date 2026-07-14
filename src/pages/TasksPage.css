@@ -1,0 +1,111 @@
+.tasks-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Toolbar */
+.tasks-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--luma-space-3);
+  margin-bottom: var(--luma-space-4);
+  flex-wrap: wrap;
+}
+
+.tasks-views {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--luma-bg-surface);
+  border-radius: var(--luma-radius-lg);
+  padding: 3px;
+}
+
+.tasks-view-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: var(--luma-radius-md);
+  font-size: var(--luma-text-xs);
+  font-weight: var(--luma-font-medium);
+  color: var(--luma-text-tertiary);
+  transition: var(--luma-transition-colors);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tasks-view-btn:hover {
+  color: var(--luma-text-secondary);
+}
+
+.tasks-view-btn.active {
+  background: var(--luma-bg-elevated);
+  color: var(--luma-text-primary);
+  box-shadow: var(--luma-shadow-sm);
+}
+
+.tasks-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--luma-space-3);
+}
+
+.tasks-sort {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tasks-sort-label {
+  font-size: var(--luma-text-xs);
+  color: var(--luma-text-ghost);
+}
+
+.tasks-sort-select {
+  background: var(--luma-bg-surface);
+  border: 1px solid var(--luma-border-subtle);
+  border-radius: var(--luma-radius-md);
+  padding: 4px 8px;
+  font-size: var(--luma-text-xs);
+  color: var(--luma-text-secondary);
+  cursor: pointer;
+  outline: none;
+  transition: var(--luma-transition-colors);
+}
+
+.tasks-sort-select:hover {
+  border-color: var(--luma-border-medium);
+}
+
+.tasks-sort-select:focus {
+  border-color: var(--luma-accent);
+}
+
+.tasks-sort-select option {
+  background: var(--luma-bg-elevated);
+  color: var(--luma-text-primary);
+}
+
+.tasks-toggle-completed {
+  padding: 4px 10px;
+  border-radius: var(--luma-radius-full);
+  font-size: var(--luma-text-xs);
+  color: var(--luma-text-ghost);
+  background: var(--luma-bg-surface);
+  border: 1px solid var(--luma-border-subtle);
+  cursor: pointer;
+  transition: var(--luma-transition-colors);
+}
+
+.tasks-toggle-completed:hover {
+  color: var(--luma-text-tertiary);
+  border-color: var(--luma-border-medium);
+}
+
+.tasks-toggle-completed.active {
+  color: var(--luma-accent-text);
+  background: var(--luma-accent-muted);
+  border-color: transparent;
+}

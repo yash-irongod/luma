@@ -1,0 +1,29 @@
+.slash-menu {
+  min-width: 200px;
+  background: var(--luma-bg-elevated);
+  border: 1px solid var(--luma-border-medium);
+  border-radius: var(--luma-radius-lg);
+  box-shadow: var(--luma-shadow-lg);
+  padding: var(--luma-space-1);
+  z-index: var(--luma-z-dropdown);
+  animation: slideUp 100ms var(--luma-ease-out);
+}
+
+.slash-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--luma-space-3);
+  width: 100%;
+  padding: var(--luma-space-2) var(--luma-space-3);
+  border-radius: var(--luma-radius-md);
+  font-size: var(--luma-text-sm);
+  color: var(--luma-text-secondary);
+  transition: var(--luma-transition-fast);
+  text-align: left;
+}
+
+.slash-menu-item:hover,
+.slash-menu-item.selected {
+  background: var(--luma-bg-hover);
+  color: var(--luma-text-primary);
+}

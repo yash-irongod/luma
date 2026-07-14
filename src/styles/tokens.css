@@ -1,0 +1,129 @@
+:root {
+  /* Backgrounds */
+  --luma-bg-base: #09090B;
+  --luma-bg-sidebar: #0C0C0F;
+  --luma-bg-main: #111114;
+  --luma-bg-surface: #18181B;
+  --luma-bg-elevated: #1F1F23;
+  --luma-bg-hover: #27272A;
+  --luma-bg-active: #2E2E33;
+
+  /* Text */
+  --luma-text-primary: #FAFAFA;
+  --luma-text-secondary: #A1A1AA;
+  --luma-text-tertiary: #71717A;
+  --luma-text-ghost: #3F3F46;
+
+  /* Borders */
+  --luma-border-subtle: rgba(255, 255, 255, 0.06);
+  --luma-border-medium: rgba(255, 255, 255, 0.10);
+  --luma-border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Accent */
+  --luma-accent: #6C6BF0;
+  --luma-accent-hover: #5B5AE0;
+  --luma-accent-muted: rgba(108, 107, 240, 0.10);
+  --luma-accent-glow: rgba(108, 107, 240, 0.25);
+  --luma-accent-text: #9B9BF5;
+
+  /* Semantic */
+  --luma-success: #34D399;
+  --luma-success-muted: rgba(52, 211, 153, 0.10);
+  --luma-warning: #FBBF24;
+  --luma-warning-muted: rgba(251, 191, 36, 0.10);
+  --luma-danger: #F87171;
+  --luma-danger-muted: rgba(248, 113, 113, 0.10);
+
+  /* Priority */
+  --luma-priority-urgent: #EF4444;
+  --luma-priority-high: #F59E0B;
+  --luma-priority-medium: #3B82F6;
+  --luma-priority-low: #6B7280;
+  --luma-priority-none: #3F3F46;
+
+  /* Font family */
+  --luma-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Text sizes */
+  --luma-text-xs: 0.75rem;
+  --luma-text-sm: 0.8125rem;
+  --luma-text-base: 0.875rem;
+  --luma-text-md: 1rem;
+  --luma-text-lg: 1.125rem;
+  --luma-text-xl: 1.25rem;
+  --luma-text-2xl: 1.5rem;
+  --luma-text-3xl: 1.875rem;
+  --luma-text-4xl: 2.25rem;
+
+  /* Font weights */
+  --luma-font-normal: 400;
+  --luma-font-medium: 500;
+  --luma-font-semibold: 600;
+
+  /* Line heights */
+  --luma-leading-tight: 1.2;
+  --luma-leading-snug: 1.4;
+  --luma-leading-normal: 1.5;
+  --luma-leading-relaxed: 1.7;
+
+  /* Letter spacing */
+  --luma-tracking-tight: -0.025em;
+  --luma-tracking-normal: 0;
+  --luma-tracking-wide: 0.05em;
+
+  /* Spacing */
+  --luma-space-0: 0;
+  --luma-space-px: 1px;
+  --luma-space-1: 0.25rem;
+  --luma-space-2: 0.5rem;
+  --luma-space-3: 0.75rem;
+  --luma-space-4: 1rem;
+  --luma-space-5: 1.25rem;
+  --luma-space-6: 1.5rem;
+  --luma-space-8: 2rem;
+  --luma-space-10: 2.5rem;
+  --luma-space-12: 3rem;
+  --luma-space-16: 4rem;
+  --luma-space-20: 5rem;
+  --luma-space-24: 6rem;
+
+  /* Radius */
+  --luma-radius-sm: 6px;
+  --luma-radius-md: 8px;
+  --luma-radius-lg: 12px;
+  --luma-radius-xl: 16px;
+  --luma-radius-full: 9999px;
+
+  /* Shadows */
+  --luma-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --luma-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --luma-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --luma-shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.7);
+  --luma-shadow-glow: 0 0 0 3px var(--luma-accent-glow);
+  --luma-shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+  /* Z-index */
+  --luma-z-sidebar: 100;
+  --luma-z-topbar: 200;
+  --luma-z-dropdown: 300;
+  --luma-z-modal: 400;
+  --luma-z-command: 500;
+  --luma-z-toast: 600;
+
+  /* Motion - Durations */
+  --luma-duration-fast: 100ms;
+  --luma-duration-normal: 200ms;
+  --luma-duration-slow: 300ms;
+  --luma-duration-slower: 500ms;
+
+  /* Motion - Easings */
+  --luma-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --luma-ease-in: cubic-bezier(0.7, 0, 1, 0.5);
+  --luma-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --luma-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Motion - Transitions */
+  --luma-transition-fast: all 100ms var(--luma-ease-out);
+  --luma-transition-normal: all 200ms var(--luma-ease-out);
+  --luma-transition-colors: background-color 150ms var(--luma-ease-out), color 150ms var(--luma-ease-out), border-color 150ms var(--luma-ease-out);
+}

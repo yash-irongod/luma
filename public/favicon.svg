@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#B8B8FF"/>
+      <stop offset="50%" stop-color="#9B9BF5"/>
+      <stop offset="100%" stop-color="#6C6BF0"/>
+    </linearGradient>
+    <linearGradient id="h" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#DDDCFF"/>
+      <stop offset="100%" stop-color="#8584E8"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#09090B"/>
+  <!-- Main L vertical stroke -->
+  <polygon points="9,5 14,5 14,22 9,22" fill="url(#g)"/>
+  <!-- L horizontal base -->
+  <polygon points="9,22 23,22 23,27 9,27" fill="url(#h)"/>
+  <!-- Facet highlight on vertical -->
+  <polygon points="9,5 12,5 12,22 9,22" fill="rgba(255,255,255,0.12)"/>
+  <!-- Facet cut diagonal -->
+  <polygon points="14,5 14,10 18,5" fill="url(#g)" opacity="0.6"/>
+  <!-- Bottom-right facet accent -->
+  <polygon points="19,22 23,22 23,27 19,27" fill="#6C6BF0" opacity="0.8"/>
+  <!-- Subtle inner light -->
+  <polygon points="9,5 11,5 11,8" fill="rgba(255,255,255,0.25)"/>
+</svg>

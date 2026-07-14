@@ -1,0 +1,198 @@
+.tiptap {
+  outline: none;
+}
+
+.tiptap h1 {
+  font-size: var(--luma-text-2xl);
+  font-weight: var(--luma-font-semibold);
+  letter-spacing: var(--luma-tracking-tight);
+  line-height: var(--luma-leading-tight);
+  color: var(--luma-text-primary);
+  margin-top: var(--luma-space-8);
+  margin-bottom: var(--luma-space-3);
+}
+
+.tiptap h2 {
+  font-size: var(--luma-text-xl);
+  font-weight: var(--luma-font-semibold);
+  letter-spacing: var(--luma-tracking-tight);
+  line-height: var(--luma-leading-tight);
+  color: var(--luma-text-primary);
+  margin-top: var(--luma-space-6);
+  margin-bottom: var(--luma-space-2);
+}
+
+.tiptap h3 {
+  font-size: var(--luma-text-lg);
+  font-weight: var(--luma-font-semibold);
+  letter-spacing: var(--luma-tracking-tight);
+  line-height: var(--luma-leading-tight);
+  color: var(--luma-text-primary);
+  margin-top: var(--luma-space-5);
+  margin-bottom: var(--luma-space-2);
+}
+
+.tiptap p {
+  font-size: var(--luma-text-md);
+  line-height: var(--luma-leading-relaxed);
+  color: var(--luma-text-secondary);
+  margin-bottom: var(--luma-space-2);
+}
+
+.tiptap ul {
+  padding-left: var(--luma-space-6);
+  margin-bottom: var(--luma-space-2);
+}
+
+.tiptap ul li {
+  position: relative;
+  padding-left: var(--luma-space-2);
+  margin-bottom: var(--luma-space-1);
+}
+
+.tiptap ul li::before {
+  content: '•';
+  position: absolute;
+  left: calc(-1 * var(--luma-space-3));
+  color: var(--luma-text-tertiary);
+}
+
+.tiptap ol {
+  padding-left: var(--luma-space-6);
+  margin-bottom: var(--luma-space-2);
+  counter-reset: list-counter;
+}
+
+.tiptap ol li {
+  position: relative;
+  padding-left: var(--luma-space-2);
+  margin-bottom: var(--luma-space-1);
+  counter-increment: list-counter;
+}
+
+.tiptap ol li::before {
+  content: counter(list-counter) '.';
+  position: absolute;
+  left: calc(-1 * var(--luma-space-4));
+  color: var(--luma-text-tertiary);
+  font-size: var(--luma-text-sm);
+}
+
+.tiptap ul[data-type='taskList'] {
+  padding-left: 0;
+}
+
+.tiptap ul[data-type='taskList'] li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--luma-space-2);
+  padding-left: 0;
+}
+
+.tiptap ul[data-type='taskList'] li::before {
+  content: none;
+}
+
+.tiptap ul[data-type='taskList'] li label {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.tiptap ul[data-type='taskList'] li label input[type='checkbox'] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--luma-border-strong);
+  border-radius: var(--luma-radius-sm);
+  background: transparent;
+  cursor: pointer;
+  transition: var(--luma-transition-colors);
+}
+
+.tiptap ul[data-type='taskList'] li label input[type='checkbox']:checked {
+  background-color: var(--luma-accent);
+  border-color: var(--luma-accent);
+}
+
+.tiptap ul[data-type='taskList'] li[data-checked='true'] > div > p {
+  text-decoration: line-through;
+  color: var(--luma-text-tertiary);
+}
+
+.tiptap blockquote {
+  border-left: 3px solid var(--luma-accent);
+  padding-left: var(--luma-space-4);
+  margin: var(--luma-space-3) 0;
+  font-style: italic;
+  color: var(--luma-text-tertiary);
+}
+
+.tiptap pre {
+  background-color: var(--luma-bg-surface);
+  border-radius: var(--luma-radius-md);
+  padding: var(--luma-space-4);
+  margin: var(--luma-space-3) 0;
+  overflow-x: auto;
+}
+
+.tiptap pre code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: var(--luma-text-sm);
+  line-height: var(--luma-leading-relaxed);
+  color: var(--luma-text-primary);
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.tiptap code {
+  background-color: var(--luma-bg-surface);
+  padding: 2px 6px;
+  border-radius: var(--luma-radius-sm);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: var(--luma-text-sm);
+  color: var(--luma-accent-text);
+}
+
+.tiptap hr {
+  border: none;
+  border-top: 1px solid var(--luma-border-subtle);
+  margin: var(--luma-space-6) 0;
+}
+
+.tiptap .luma-link {
+  color: var(--luma-accent-text);
+  text-decoration: none;
+  transition: var(--luma-transition-colors);
+}
+
+.tiptap .luma-link:hover {
+  text-decoration: underline;
+}
+
+.tiptap a {
+  color: var(--luma-accent-text);
+  text-decoration: none;
+  transition: var(--luma-transition-colors);
+}
+
+.tiptap a:hover {
+  text-decoration: underline;
+}
+
+.tiptap mark {
+  background-color: var(--luma-accent-muted);
+  color: var(--luma-accent-text);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--luma-text-ghost);
+  pointer-events: none;
+  height: 0;
+}

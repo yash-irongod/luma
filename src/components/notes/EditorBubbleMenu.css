@@ -1,0 +1,31 @@
+.bubble-menu {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--luma-bg-elevated);
+  border: 1px solid var(--luma-border-medium);
+  border-radius: var(--luma-radius-lg);
+  box-shadow: var(--luma-shadow-lg);
+  padding: 4px;
+}
+
+.bubble-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--luma-radius-sm);
+  color: var(--luma-text-secondary);
+  transition: var(--luma-transition-colors);
+}
+
+.bubble-menu-btn:hover {
+  background: var(--luma-bg-hover);
+  color: var(--luma-text-primary);
+}
+
+.bubble-menu-btn.active {
+  background: var(--luma-accent-muted);
+  color: var(--luma-accent-text);
+}

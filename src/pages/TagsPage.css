@@ -1,0 +1,48 @@
+.tags-page {
+  max-width: 480px;
+}
+
+.tags-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--luma-space-2);
+}
+
+.tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--luma-space-2) var(--luma-space-3);
+  border-radius: var(--luma-radius-md);
+  transition: var(--luma-transition-colors);
+}
+
+.tag-row:hover {
+  background: var(--luma-bg-hover);
+}
+
+.tag-row:hover .tag-delete { opacity: 1; }
+
+.tag-delete {
+  font-size: 18px;
+  color: var(--luma-text-ghost);
+  opacity: 0;
+  transition: all 150ms ease;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--luma-radius-sm);
+}
+
+.tag-delete:hover {
+  color: var(--luma-danger);
+  background: var(--luma-danger-muted);
+}
+
+.tag-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--luma-space-5);
+}

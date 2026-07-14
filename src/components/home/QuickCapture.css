@@ -1,0 +1,39 @@
+.quick-capture {
+  display: flex;
+  align-items: center;
+  gap: var(--luma-space-3);
+  width: 100%;
+  padding: var(--luma-space-4) var(--luma-space-5);
+  background: var(--luma-bg-surface);
+  border: 1px solid var(--luma-border-subtle);
+  border-radius: var(--luma-radius-lg);
+  transition: var(--luma-transition-colors);
+  cursor: text;
+}
+
+.quick-capture:hover {
+  border-color: var(--luma-border-medium);
+  background: var(--luma-bg-elevated);
+}
+
+.quick-capture-icon {
+  color: var(--luma-accent);
+  flex-shrink: 0;
+}
+
+.quick-capture-text {
+  flex: 1;
+  text-align: left;
+  color: var(--luma-text-ghost);
+  font-size: var(--luma-text-base);
+}
+
+.quick-capture-kbd {
+  font-size: var(--luma-text-xs);
+  color: var(--luma-text-ghost);
+  background: var(--luma-bg-hover);
+  padding: 3px 8px;
+  border-radius: var(--luma-radius-sm);
+  border: 1px solid var(--luma-border-subtle);
+  font-family: inherit;
+}

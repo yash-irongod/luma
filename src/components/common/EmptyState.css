@@ -1,0 +1,42 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--luma-space-16) var(--luma-space-6);
+  gap: var(--luma-space-3);
+}
+
+.empty-state-icon {
+  color: var(--luma-text-ghost);
+  margin-bottom: var(--luma-space-2);
+}
+
+.empty-state-heading {
+  font-size: var(--luma-text-lg);
+  font-weight: var(--luma-font-semibold);
+  color: var(--luma-text-primary);
+}
+
+.empty-state-body {
+  font-size: var(--luma-text-sm);
+  color: var(--luma-text-tertiary);
+  max-width: 320px;
+  line-height: var(--luma-leading-normal);
+}
+
+.empty-state-action {
+  margin-top: var(--luma-space-3);
+  padding: 8px 20px;
+  background: var(--luma-accent);
+  color: #fff;
+  border-radius: var(--luma-radius-md);
+  font-size: var(--luma-text-sm);
+  font-weight: var(--luma-font-medium);
+  transition: var(--luma-transition-colors);
+}
+
+.empty-state-action:hover {
+  background: var(--luma-accent-hover);
+}

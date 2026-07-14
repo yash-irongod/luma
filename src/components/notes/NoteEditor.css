@@ -1,0 +1,49 @@
+.note-editor-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--luma-space-6) 0;
+}
+
+.note-editor-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--luma-space-3);
+  border-top: 1px solid var(--luma-border-subtle);
+  margin-top: var(--luma-space-8);
+}
+
+.note-editor-footer-left,
+.note-editor-footer-right {
+  display: flex;
+  align-items: center;
+  gap: var(--luma-space-3);
+}
+
+.note-editor-wordcount {
+  font-size: 11px;
+  color: var(--luma-text-ghost);
+  font-variant-numeric: tabular-nums;
+}
+
+.note-editor-export-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--luma-radius-sm);
+  color: var(--luma-text-ghost);
+  cursor: pointer;
+  transition: var(--luma-transition-colors);
+}
+
+.note-editor-export-btn:hover {
+  background: var(--luma-bg-hover);
+  color: var(--luma-text-secondary);
+}
+
+.note-editor-status {
+  font-size: var(--luma-text-xs);
+  color: var(--luma-text-ghost);
+}

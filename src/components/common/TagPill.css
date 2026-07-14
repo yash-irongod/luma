@@ -1,0 +1,29 @@
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: var(--luma-bg-surface);
+  border-radius: var(--luma-radius-full);
+  font-size: var(--luma-text-xs);
+  color: var(--luma-text-secondary);
+}
+
+.tag-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tag-color, var(--luma-accent));
+}
+
+.tag-pill-name { white-space: nowrap; }
+
+.tag-pill-remove {
+  font-size: 14px;
+  line-height: 1;
+  color: var(--luma-text-ghost);
+  margin-left: 2px;
+  transition: var(--luma-transition-colors);
+}
+
+.tag-pill-remove:hover { color: var(--luma-text-primary); }

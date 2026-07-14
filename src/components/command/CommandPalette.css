@@ -1,0 +1,94 @@
+.command-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 20vh;
+  z-index: var(--luma-z-command);
+  animation: fadeIn 100ms var(--luma-ease-out);
+}
+
+.command-wrapper {
+  animation: scaleIn 150ms var(--luma-ease-out);
+}
+
+.command-dialog {
+  width: 560px;
+  max-width: 90vw;
+  background: var(--luma-bg-elevated);
+  border: 1px solid var(--luma-border-medium);
+  border-radius: var(--luma-radius-xl);
+  box-shadow: var(--luma-shadow-xl);
+  overflow: hidden;
+}
+
+.command-input {
+  width: 100%;
+  padding: var(--luma-space-4) var(--luma-space-5);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--luma-border-subtle);
+  color: var(--luma-text-primary);
+  font-size: var(--luma-text-md);
+  outline: none;
+}
+
+.command-input::placeholder { color: var(--luma-text-ghost); }
+
+.command-list {
+  max-height: 360px;
+  overflow-y: auto;
+  padding: var(--luma-space-2);
+}
+
+.command-empty {
+  padding: var(--luma-space-8) var(--luma-space-4);
+  text-align: center;
+  color: var(--luma-text-ghost);
+  font-size: var(--luma-text-sm);
+}
+
+.command-group {
+  margin-bottom: var(--luma-space-1);
+}
+
+.command-group [cmdk-group-heading] {
+  font-size: var(--luma-text-xs);
+  font-weight: var(--luma-font-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--luma-tracking-wide);
+  color: var(--luma-text-ghost);
+  padding: var(--luma-space-2) var(--luma-space-3);
+  user-select: none;
+}
+
+.command-item {
+  display: flex;
+  align-items: center;
+  gap: var(--luma-space-3);
+  padding: var(--luma-space-2) var(--luma-space-3);
+  border-radius: var(--luma-radius-md);
+  font-size: var(--luma-text-sm);
+  color: var(--luma-text-secondary);
+  cursor: pointer;
+  transition: var(--luma-transition-fast);
+  min-height: 36px;
+}
+
+.command-item[data-selected="true"] {
+  background: var(--luma-bg-hover);
+  color: var(--luma-text-primary);
+}
+
+.command-item:active {
+  background: var(--luma-bg-active);
+}
+
+.command-item-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
