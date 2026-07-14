@@ -1,4 +1,4 @@
-# ✦ Luma
+# Luma
 
 **A premium productivity workspace for calm, clear thinking.**
 
