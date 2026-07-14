@@ -1,10 +1,67 @@
-# Luma
+<p align="center">
+  <img src="public/luma-logo.png" alt="Luma logo" width="120" />
+</p>
 
-**A premium productivity workspace for calm, clear thinking.**
+<h1 align="center">Luma</h1>
 
-Luma combines notes, tasks, and projects into a single beautiful dark-mode interface — inspired by the best of Notion, Todoist, and Linear.
+<p align="center">
+  <strong>A premium productivity workspace for calm, clear thinking.</strong>
+</p>
 
-> No sign-ups. No subscriptions. Just open and start working.
+<p align="center">
+  Notes, tasks, and projects in one beautiful dark-mode interface — inspired by the best of Notion, Todoist, and Linear.<br />
+  <em>No sign-ups. No subscriptions. Just open and start working.</em>
+</p>
+
+<p align="center">
+  <a href="https://luma-productivity.vercel.app/">
+    <img src="https://img.shields.io/badge/-Live%20Demo-8B5CF6?style=for-the-badge&logoColor=white" alt="Live Demo" />
+  </a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-8B5CF6?style=flat-square" alt="License: MIT" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite 8" />
+  <img src="https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Deployed on Vercel" />
+</p>
+
+<p align="center">
+  <a href="#-features">Features</a> ·
+  <a href="#-screenshots">Screenshots</a> ·
+  <a href="#-tech-stack">Tech Stack</a> ·
+  <a href="#-getting-started">Getting Started</a> ·
+  <a href="#-license">License</a>
+</p>
+
+---
+
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="public/screenshots/home-dashboard.png" alt="Home Dashboard" width="100%" />
+      <br /><sub><b>Home Dashboard</b></sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="public/screenshots/projects-mobile.png" alt="Projects — Mobile View" width="100%" />
+      <br /><sub><b>Projects — Mobile View</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="public/screenshots/settings-export.png" alt="Settings — Export" width="100%" />
+      <br /><sub><b>Settings — Export</b></sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="public/screenshots/tasks-priority.png" alt="Tasks — By Priority View" width="100%" />
+      <br /><sub><b>Tasks — By Priority View</b></sub>
+    </td>
+  </tr>
+</table>
+
+<!-- Drop your actual screenshots into public/screenshots/ using the filenames above (or update the paths to match your own). -->
 
 ---
 
@@ -82,10 +139,14 @@ Luma combines notes, tasks, and projects into a single beautiful dark-mode inter
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- **Node.js** 18+ and **npm** 9+
+### Try it instantly
 
-### Install & Run Locally
+No installation needed — **[open the live demo](https://luma-productivity.vercel.app/)** and start working right away.
+
+### Run it locally
+
+**Prerequisites**
+- **Node.js** 18+ and **npm** 9+
 
 ```bash
 # Clone
@@ -164,5 +225,10 @@ MIT — see [LICENSE](./LICENSE)
 ---
 
 <p align="center">
-  Built with React, Zustand, TipTap, and ♥
+  Built with React, Zustand, and TipTap — and a lot of ♥
+</p>
+
+<p align="center">
+  <a href="https://luma-productivity.vercel.app/">Live Demo</a> ·
+  <a href="./LICENSE">License</a>
 </p>
