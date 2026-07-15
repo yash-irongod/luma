@@ -41,7 +41,7 @@
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="public/screenshots/home-dashboard.png" alt="Home Dashboard" width="100%" />
+      <img src="public/screenshots/home-mobile.png" alt="Home Dashboard" width="100%" />
       <br /><sub><b>Home Dashboard</b></sub>
     </td>
     <td align="center" width="50%">
