@@ -8,7 +8,7 @@ import Dropdown, { DropdownItem } from '../common/Dropdown';
 import { toast } from '../common/Toast';
 import {
   Trash2, MoreHorizontal, GripVertical, ChevronDown, ChevronRight,
-  Plus, Sun, Repeat, Flag, ArrowRight
+  Plus, Sun, Repeat, Flag, ArrowRight, Pencil
 } from 'lucide-react';
 import { formatDate } from '../../utils/dates';
 import { PRIORITIES } from '../../utils/constants';
@@ -160,6 +160,12 @@ const TaskItem = memo(function TaskItem({ task, compact = false, dragHandleProps
                 </button>
               }
             >
+              <DropdownItem onClick={() => { setEditTitle(task.title); setEditing(true); }}>
+                <Pencil size={14} /> Rename
+              </DropdownItem>
+
+              <div className="dropdown-separator" />
+
               {/* Priority submenu */}
               {PRIORITIES.map(p => (
                 <DropdownItem key={p.value} onClick={() => updateTask(task.id, { priority: p.value })}>
