@@ -249,17 +249,30 @@ const TaskItem = memo(function TaskItem({ task, compact = false, dragHandleProps
 
       {/* Add subtask input */}
       {showSubtaskInput && (
-        <form className="subtask-add" onSubmit={handleAddSubtask}>
+        <div className="subtask-add">
           <Plus size={12} />
           <input
             className="subtask-add-input"
             placeholder="Add subtask..."
             value={newSubtask}
             onChange={e => setNewSubtask(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                if (newSubtask.trim()) {
+                  addSubtask(task.id, newSubtask.trim());
+                  setNewSubtask('');
+                }
+              }
+              if (e.key === 'Escape') {
+                setNewSubtask('');
+                setShowSubtaskInput(false);
+              }
+            }}
             onBlur={() => { if (!newSubtask.trim()) setShowSubtaskInput(false); }}
             autoFocus
           />
-        </form>
+        </div>
       )}
     </motion.div>
   );
