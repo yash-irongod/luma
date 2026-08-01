@@ -7,7 +7,7 @@ import DatePicker from '../common/DatePicker';
 import Dropdown, { DropdownItem } from '../common/Dropdown';
 import { toast } from '../common/Toast';
 import {
-  Trash2, MoreHorizontal, GripVertical, ChevronDown, ChevronRight,
+  Trash2, MoreHorizontal, GripVertical, ChevronDown, ChevronRight, ChevronUp,
   Plus, Sun, Repeat, Flag, ArrowRight, Pencil
 } from 'lucide-react';
 import { formatDate } from '../../utils/dates';
@@ -20,6 +20,8 @@ const TaskItem = memo(function TaskItem({ task, compact = false, dragHandleProps
   const [showSubtasks, setShowSubtasks] = useState(task.subtasks?.length > 0);
   const [newSubtask, setNewSubtask] = useState('');
   const [showSubtaskInput, setShowSubtaskInput] = useState(false);
+  const [editingSubtaskId, setEditingSubtaskId] = useState(null);
+  const [editSubtaskTitle, setEditSubtaskTitle] = useState('');
 
   const toggleComplete = useTaskStore(s => s.toggleComplete);
   const updateTask = useTaskStore(s => s.updateTask);
@@ -27,6 +29,8 @@ const TaskItem = memo(function TaskItem({ task, compact = false, dragHandleProps
   const addSubtask = useTaskStore(s => s.addSubtask);
   const toggleSubtask = useTaskStore(s => s.toggleSubtask);
   const removeSubtask = useTaskStore(s => s.removeSubtask);
+  const updateSubtask = useTaskStore(s => s.updateSubtask);
+  const moveSubtask = useTaskStore(s => s.moveSubtask);
   const toggleFocusToday = useTaskStore(s => s.toggleFocusToday);
   const lists = useListStore(s => s.lists);
 
@@ -226,7 +230,7 @@ const TaskItem = memo(function TaskItem({ task, compact = false, dragHandleProps
       {/* Subtasks */}
       {showSubtasks && totalSubtasks > 0 && (
         <div className="subtask-list">
-          {task.subtasks.map(st => (
+          {task.subtasks.map((st, idx) => (
             <div key={st.id} className={`subtask-item ${st.completed ? 'completed' : ''}`}>
               <button
                 className={`subtask-checkbox ${st.completed ? 'checked' : ''}`}
@@ -234,14 +238,51 @@ const TaskItem = memo(function TaskItem({ task, compact = false, dragHandleProps
               >
                 {st.completed && <span className="task-checkmark">✓</span>}
               </button>
-              <span className="subtask-title">{st.title}</span>
-              <button
-                className="subtask-remove"
-                onClick={() => removeSubtask(task.id, st.id)}
-                aria-label="Remove subtask"
-              >
-                ×
-              </button>
+              {editingSubtaskId === st.id ? (
+                <input
+                  className="subtask-edit-input"
+                  value={editSubtaskTitle}
+                  onChange={e => setEditSubtaskTitle(e.target.value)}
+                  onBlur={() => {
+                    if (editSubtaskTitle.trim()) updateSubtask(task.id, st.id, editSubtaskTitle.trim());
+                    setEditingSubtaskId(null);
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      if (editSubtaskTitle.trim()) updateSubtask(task.id, st.id, editSubtaskTitle.trim());
+                      setEditingSubtaskId(null);
+                    }
+                    if (e.key === 'Escape') setEditingSubtaskId(null);
+                  }}
+                  autoFocus
+                />
+              ) : (
+                <span
+                  className="subtask-title"
+                  onDoubleClick={() => { setEditingSubtaskId(st.id); setEditSubtaskTitle(st.title); }}
+                >
+                  {st.title}
+                </span>
+              )}
+              <div className="subtask-actions">
+                {idx > 0 && (
+                  <button className="subtask-move-btn" onClick={() => moveSubtask(task.id, st.id, -1)} aria-label="Move up">
+                    <ChevronUp size={12} />
+                  </button>
+                )}
+                {idx < task.subtasks.length - 1 && (
+                  <button className="subtask-move-btn" onClick={() => moveSubtask(task.id, st.id, 1)} aria-label="Move down">
+                    <ChevronDown size={12} />
+                  </button>
+                )}
+                <button
+                  className="subtask-remove"
+                  onClick={() => removeSubtask(task.id, st.id)}
+                  aria-label="Remove subtask"
+                >
+                  ×
+                </button>
+              </div>
             </div>
           ))}
         </div>

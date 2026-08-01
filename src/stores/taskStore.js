@@ -89,6 +89,25 @@ export const useTaskStore = create(
           subtasks: t.subtasks.filter(st => st.id !== subtaskId),
         } : t),
       })),
+
+      updateSubtask: (taskId, subtaskId, title) => set(state => ({
+        tasks: state.tasks.map(t => t.id === taskId ? {
+          ...t,
+          subtasks: t.subtasks.map(st => st.id === subtaskId ? { ...st, title } : st),
+        } : t),
+      })),
+
+      moveSubtask: (taskId, subtaskId, direction) => set(state => ({
+        tasks: state.tasks.map(t => {
+          if (t.id !== taskId) return t;
+          const idx = t.subtasks.findIndex(st => st.id === subtaskId);
+          const newIdx = idx + direction;
+          if (newIdx < 0 || newIdx >= t.subtasks.length) return t;
+          const arr = [...t.subtasks];
+          [arr[idx], arr[newIdx]] = [arr[newIdx], arr[idx]];
+          return { ...t, subtasks: arr };
+        }),
+      })),
       
       // Focus Today
       toggleFocusToday: (id) => set(state => ({

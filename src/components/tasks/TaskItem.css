@@ -241,12 +241,51 @@
   white-space: nowrap;
 }
 
+.subtask-edit-input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--luma-accent);
+  outline: none;
+  color: var(--luma-text-primary);
+  font-size: var(--luma-text-xs);
+  padding: 1px 0;
+}
+
+.subtask-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 150ms ease;
+  flex-shrink: 0;
+}
+
+.subtask-item:hover .subtask-actions { opacity: 1; }
+
+.subtask-move-btn {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--luma-text-ghost);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: var(--luma-transition-colors);
+}
+
+.subtask-move-btn:hover {
+  background: var(--luma-bg-hover);
+  color: var(--luma-text-secondary);
+}
+
 .subtask-remove {
   font-size: 14px;
   color: var(--luma-text-ghost);
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 150ms ease, color 150ms ease;
+  transition: color 150ms ease;
   width: 18px;
   height: 18px;
   display: flex;
@@ -254,7 +293,6 @@
   justify-content: center;
 }
 
-.subtask-item:hover .subtask-remove { opacity: 1; }
 .subtask-remove:hover { color: var(--luma-danger); }
 
 /* Subtask add form */
