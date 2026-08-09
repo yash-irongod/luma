@@ -59,8 +59,12 @@ export function useSync() {
     console.log('[Sync] Handling first login for', uid);
     setSyncStatus('syncing');
     try {
-      // Check if this user has synced before
-      const syncedBefore = localStorage.getItem(`luma-synced-${uid}`);
+      // If this user has synced before, skip merge dialog entirely
+      if (localStorage.getItem(`luma-synced-${uid}`)) {
+        console.log('[Sync] Previously synced user, starting listeners directly');
+        startRealtimeSync(uid);
+        return;
+      }
 
       // Pull cloud data
       const cloudData = {};
@@ -82,32 +86,12 @@ export function useSync() {
       }
       console.log('[Sync] Local data found:', hasLocalData);
 
-      // Check if local and cloud data are effectively the same
-      const dataIsSame = () => {
-        for (const name of COLLECTIONS) {
-          const localIds = new Set((localData[name] || []).map(i => i.id));
-          const cloudIds = new Set((cloudData[name] || []).map(i => i.id));
-          if (localIds.size !== cloudIds.size) return false;
-          for (const id of localIds) {
-            if (!cloudIds.has(id)) return false;
-          }
-        }
-        return true;
-      };
-
       if (hasCloudData && hasLocalData) {
-        if (syncedBefore || dataIsSame()) {
-          // Already synced before or same data — just start listeners
-          console.log('[Sync] Data matches or previously synced, skipping merge dialog');
-          localStorage.setItem(`luma-synced-${uid}`, 'true');
-          startRealtimeSync(uid);
-        } else {
-          // Genuine first-time conflict — show merge dialog
-          console.log('[Sync] Different data found, showing merge dialog');
-          setMergeData({ localData, cloudData });
-          setShowMergeDialog(true);
-          setSyncStatus('idle');
-        }
+        // First time — show merge dialog
+        console.log('[Sync] Both have data, showing merge dialog');
+        setMergeData({ localData, cloudData });
+        setShowMergeDialog(true);
+        setSyncStatus('idle');
       } else if (hasLocalData && !hasCloudData) {
         console.log('[Sync] Pushing local data to cloud');
         for (const [name, items] of Object.entries(localData)) {
