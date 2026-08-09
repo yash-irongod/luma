@@ -12,7 +12,7 @@ import { useTagStore } from '../stores/tagStore';
 import { useListStore } from '../stores/listStore';
 import { Download, Upload, Trash2, FileText, Table, HardDrive, Shield, LogIn, LogOut } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { useSync } from '../hooks/useSync';
+import { useSyncStore } from '../stores/syncStore';
 import './SettingsPage.css';
 
 function estimateStorageSize() {
@@ -32,7 +32,7 @@ export default function SettingsPage() {
   const fileRef = useRef(null);
   const storageMB = useMemo(() => estimateStorageSize(), []);
   const { user, signInWithGoogle, signOut } = useAuth();
-  const { syncStatus } = useSync();
+  const syncStatus = useSyncStore(s => s.syncStatus);
 
   // ── Export: Full JSON ──
   const handleExportJSON = () => {
