@@ -102,3 +102,23 @@
   min-width: 52px;
   text-align: right;
 }
+
+@media (max-width: 768px) {
+  .tasks-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .tasks-views {
+    overflow-x: auto;
+    max-width: 100%;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+  .tasks-view-btn {
+    flex-shrink: 0;
+  }
+  .tasks-toggle-completed {
+    align-self: flex-start;
+  }
+}

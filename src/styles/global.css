@@ -128,7 +128,8 @@ body {
   }
 
   .app-main {
-    margin-left: 56px !important;
+    margin-left: 0 !important;
+    padding-bottom: calc(56px + env(safe-area-inset-bottom));
   }
 
   .page-container {

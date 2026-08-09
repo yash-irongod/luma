@@ -285,3 +285,22 @@
   min-width: 32px;
   text-align: right;
 }
+
+@media (max-width: 768px) {
+  .home-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: var(--luma-space-6);
+  }
+  .home-greeting {
+    font-size: var(--luma-text-xl);
+  }
+  .home-notes-grid {
+    grid-template-columns: 1fr;
+  }
+  .home-stats {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--luma-space-4);
+  }
+}

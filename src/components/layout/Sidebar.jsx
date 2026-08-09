@@ -5,9 +5,10 @@ import { useProjectStore } from '../../stores/projectStore';
 import { useNoteStore } from '../../stores/noteStore';
 import { useTaskStore } from '../../stores/taskStore';
 import { useListStore } from '../../stores/listStore';
+import { useAuth } from '../../hooks/useAuth';
 import {
   Home, FileText, CheckSquare, FolderOpen, Search,
-  Trash2, Settings, ChevronsLeft, ChevronsRight, Plus, Tag, Sun, List
+  Trash2, Settings, ChevronsLeft, ChevronsRight, Plus, Tag, Sun, List, LogIn, Cloud
 } from 'lucide-react';
 import './Sidebar.css';
 
@@ -60,6 +61,8 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
+
+  const { user, signInWithGoogle } = useAuth();
 
   const projects = useMemo(() => allProjects.filter(p => !p.trashedAt), [allProjects]);
   const noteCount = useMemo(() => allNotes.filter(n => !n.trashedAt).length, [allNotes]);
@@ -186,6 +189,21 @@ export default function Sidebar() {
       </div>
 
       <div className="sidebar-footer">
+        {user ? (
+          <Link to="/settings" className="sidebar-user-card">
+            {user.photoURL ? (
+              <img src={user.photoURL} alt="" className="sidebar-avatar" />
+            ) : (
+              <Cloud size={18} className="sidebar-item-icon" />
+            )}
+            <span className="sidebar-item-label">{user.displayName || 'Synced'}</span>
+          </Link>
+        ) : (
+          <button className="sidebar-item sidebar-signin-btn" onClick={signInWithGoogle}>
+            <LogIn size={18} className="sidebar-item-icon" />
+            <span className="sidebar-item-label">Sign in</span>
+          </button>
+        )}
         <SidebarItem to="/trash" icon={Trash2} label="Trash" />
         <SidebarItem to="/settings" icon={Settings} label="Settings" />
         <button className="sidebar-shortcut-hint" onClick={toggleCommandPalette}>

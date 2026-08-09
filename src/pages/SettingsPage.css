@@ -54,6 +54,76 @@
   border-top: 1px solid var(--luma-border-subtle);
 }
 
+/* Account section */
+.settings-account-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--luma-bg-surface);
+  border: 1px solid var(--luma-border-subtle);
+  border-radius: var(--luma-radius-lg);
+  padding: var(--luma-space-4);
+  margin-bottom: var(--luma-space-5);
+}
+
+.settings-account-info {
+  display: flex;
+  align-items: center;
+  gap: var(--luma-space-4);
+}
+
+.settings-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.settings-account-name {
+  font-size: var(--luma-text-base);
+  font-weight: var(--luma-font-medium);
+  color: var(--luma-text-primary);
+}
+
+.settings-account-email {
+  font-size: var(--luma-text-sm);
+  color: var(--luma-text-secondary);
+}
+
+.settings-sync-status {
+  display: flex;
+  align-items: center;
+  gap: var(--luma-space-2);
+  font-size: var(--luma-text-xs);
+  color: var(--luma-text-tertiary);
+  margin-top: var(--luma-space-1);
+}
+
+.sync-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.sync-dot.synced { background-color: var(--luma-success); }
+.sync-dot.syncing { background-color: var(--luma-warning); }
+.sync-dot.local { background-color: var(--luma-text-ghost); }
+
+.settings-account-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--luma-space-3);
+  background: var(--luma-bg-surface);
+  border: 1px solid var(--luma-border-subtle);
+  border-radius: var(--luma-radius-lg);
+  padding: var(--luma-space-4);
+  margin-bottom: var(--luma-space-5);
+}
+.settings-account-empty p {
+  color: var(--luma-text-secondary);
+  font-size: var(--luma-text-sm);
+}
+
 /* Fields */
 .settings-field {
   margin-bottom: var(--luma-space-5);
@@ -150,4 +220,13 @@
   font-size: var(--luma-text-sm);
   color: var(--luma-text-tertiary);
   line-height: var(--luma-leading-relaxed);
+}
+
+@media (max-width: 768px) {
+  .settings-export-grid {
+    grid-template-columns: 1fr;
+  }
+  .settings-input {
+    max-width: 100%;
+  }
 }

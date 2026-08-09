@@ -1,0 +1,72 @@
+.merge-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(9, 9, 11, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--luma-z-modal);
+}
+
+.merge-dialog {
+  background-color: var(--luma-bg-elevated);
+  border: 1px solid var(--luma-border-subtle);
+  border-radius: var(--luma-radius-lg);
+  padding: var(--luma-space-6);
+  max-width: 400px;
+  width: 90%;
+  box-shadow: var(--luma-shadow-lg);
+}
+
+.merge-dialog h2 {
+  color: var(--luma-text-primary);
+  margin-top: 0;
+  margin-bottom: var(--luma-space-2);
+  font-size: 1.25rem;
+}
+
+.merge-dialog p {
+  color: var(--luma-text-secondary);
+  margin-bottom: var(--luma-space-6);
+  line-height: 1.5;
+}
+
+.merge-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--luma-space-3);
+}
+
+.merge-btn {
+  padding: var(--luma-space-3) var(--luma-space-4);
+  border-radius: var(--luma-radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all var(--luma-transition-fast) var(--luma-ease-out);
+}
+
+.merge-btn.primary {
+  background-color: var(--luma-accent);
+  color: var(--luma-text-primary);
+}
+
+.merge-btn.primary:hover {
+  filter: brightness(1.1);
+}
+
+.merge-btn.secondary {
+  background-color: var(--luma-bg-surface);
+  color: var(--luma-text-primary);
+  border: 1px solid var(--luma-border-subtle);
+}
+
+.merge-btn.secondary:hover {
+  background-color: var(--luma-bg-hover);
+  border-color: var(--luma-border-medium);
+}

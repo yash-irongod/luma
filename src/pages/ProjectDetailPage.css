@@ -62,3 +62,12 @@
   cursor: pointer;
   padding: var(--luma-space-2) 0;
 }
+
+@media (max-width: 768px) {
+  .project-notes-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-detail-name {
+    font-size: var(--luma-text-xl);
+  }
+}

@@ -10,7 +10,9 @@ import { useTaskStore } from '../stores/taskStore';
 import { useProjectStore } from '../stores/projectStore';
 import { useTagStore } from '../stores/tagStore';
 import { useListStore } from '../stores/listStore';
-import { Download, Upload, Trash2, FileText, Table, HardDrive, Shield } from 'lucide-react';
+import { Download, Upload, Trash2, FileText, Table, HardDrive, Shield, LogIn, LogOut } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
+import { useSync } from '../hooks/useSync';
 import './SettingsPage.css';
 
 function estimateStorageSize() {
@@ -29,6 +31,8 @@ export default function SettingsPage() {
   const [clearConfirm, setClearConfirm] = useState(false);
   const fileRef = useRef(null);
   const storageMB = useMemo(() => estimateStorageSize(), []);
+  const { user, signInWithGoogle, signOut } = useAuth();
+  const { syncStatus } = useSync();
 
   // ── Export: Full JSON ──
   const handleExportJSON = () => {
@@ -144,6 +148,36 @@ export default function SettingsPage() {
                 <span>Storage used: <strong>{storageMB} MB</strong> of ~5 MB</span>
               </div>
             </div>
+          </section>
+
+          {/* Account */}
+          <section className="settings-section">
+            <h2 className="settings-section-title">Account</h2>
+            {user ? (
+              <div className="settings-account-card">
+                <div className="settings-account-info">
+                  {user.photoURL && <img src={user.photoURL} alt="Avatar" className="settings-avatar" />}
+                  <div>
+                    <div className="settings-account-name">{user.displayName}</div>
+                    <div className="settings-account-email">{user.email}</div>
+                    <div className="settings-sync-status">
+                      <span className={`sync-dot ${syncStatus === 'synced' ? 'synced' : syncStatus === 'syncing' ? 'syncing' : 'local'}`}></span>
+                      {syncStatus === 'synced' ? 'Synced' : syncStatus === 'syncing' ? 'Syncing...' : 'Local only'}
+                    </div>
+                  </div>
+                </div>
+                <Button variant="secondary" size="sm" icon={LogOut} onClick={signOut}>
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <div className="settings-account-empty">
+                <p>Sign in to sync your data across devices</p>
+                <Button variant="primary" icon={LogIn} onClick={signInWithGoogle}>
+                  Sign in with Google
+                </Button>
+              </div>
+            )}
           </section>
 
           {/* Profile */}

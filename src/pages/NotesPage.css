@@ -137,3 +137,19 @@
   color: var(--luma-text-ghost);
   margin-top: var(--luma-space-4);
 }
+
+@media (max-width: 768px) {
+  .notes-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .notes-search {
+    max-width: 100%;
+  }
+  .notes-toolbar-right {
+    justify-content: space-between;
+  }
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+}
