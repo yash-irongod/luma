@@ -59,9 +59,22 @@ export function useSync() {
     console.log('[Sync] Handling first login for', uid);
     setSyncStatus('syncing');
     try {
-      // If this user has synced before, skip merge dialog entirely
+      // Returning user — auto-merge (union, newer wins)
       if (localStorage.getItem(`luma-synced-${uid}`)) {
-        console.log('[Sync] Previously synced user, starting listeners directly');
+        console.log('[Sync] Returning user, auto-merging');
+
+        for (const [name, config] of Object.entries(STORE_MAP)) {
+          const localItems = config.getItems(config.store.getState());
+          const cloudItems = await pullAll(uid, name);
+
+          // Merge: union of both, newer updatedAt wins on conflicts
+          const merged = mergeData(localItems, cloudItems);
+          config.store.setState({ [name]: merged });
+
+          // Push merged result to cloud
+          if (merged.length > 0) await pushAll(uid, name, merged);
+        }
+
         startRealtimeSync(uid);
         return;
       }
