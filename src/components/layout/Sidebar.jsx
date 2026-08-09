@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { NavLink, Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useUIStore } from '../../stores/uiStore';
 import { useProjectStore } from '../../stores/projectStore';
@@ -8,7 +8,7 @@ import { useListStore } from '../../stores/listStore';
 import { useAuth } from '../../hooks/useAuth';
 import {
   Home, FileText, CheckSquare, FolderOpen, Search,
-  Trash2, Settings, ChevronsLeft, ChevronsRight, Plus, Tag, Sun, List, LogIn, Cloud
+  Trash2, Settings, ChevronsLeft, ChevronsRight, Plus, Tag, Sun, List, LogIn, Cloud, Loader
 } from 'lucide-react';
 import './Sidebar.css';
 
@@ -63,6 +63,18 @@ export default function Sidebar() {
   const [searchParams] = useSearchParams();
 
   const { user, signInWithGoogle } = useAuth();
+  const [signingIn, setSigningIn] = useState(false);
+
+  const handleSignIn = async () => {
+    setSigningIn(true);
+    try {
+      await signInWithGoogle();
+    } catch (e) {
+      // error already logged in useAuth
+    } finally {
+      setSigningIn(false);
+    }
+  };
 
   const projects = useMemo(() => allProjects.filter(p => !p.trashedAt), [allProjects]);
   const noteCount = useMemo(() => allNotes.filter(n => !n.trashedAt).length, [allNotes]);
@@ -199,9 +211,9 @@ export default function Sidebar() {
             <span className="sidebar-item-label">{user.displayName || 'Synced'}</span>
           </Link>
         ) : (
-          <button className="sidebar-item sidebar-signin-btn" onClick={signInWithGoogle}>
-            <LogIn size={18} className="sidebar-item-icon" />
-            <span className="sidebar-item-label">Sign in</span>
+          <button className="sidebar-item sidebar-signin-btn" onClick={handleSignIn} disabled={signingIn}>
+            {signingIn ? <Loader size={18} className="sidebar-item-icon sidebar-spinner" /> : <LogIn size={18} className="sidebar-item-icon" />}
+            <span className="sidebar-item-label">{signingIn ? 'Signing in...' : 'Sign in'}</span>
           </button>
         )}
         <SidebarItem to="/trash" icon={Trash2} label="Trash" />
