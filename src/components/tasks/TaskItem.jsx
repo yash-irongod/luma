@@ -8,11 +8,19 @@ import Dropdown, { DropdownItem } from '../common/Dropdown';
 import { toast } from '../common/Toast';
 import {
   Trash2, MoreHorizontal, GripVertical, ChevronDown, ChevronRight, ChevronUp,
-  Plus, Sun, Repeat, Flag, ArrowRight, Pencil
+  Plus, Sun, Repeat, Flag, ArrowRight, Pencil, Calendar, Clock
 } from 'lucide-react';
 import { formatDate } from '../../utils/dates';
 import { PRIORITIES } from '../../utils/constants';
 import './TaskItem.css';
+
+function formatTime12h(time) {
+  if (!time) return '';
+  const [h, m] = time.split(':').map(Number);
+  const period = h >= 12 ? 'PM' : 'AM';
+  const hour = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return `${hour}:${m.toString().padStart(2, '0')} ${period}`;
+}
 
 const TaskItem = memo(function TaskItem({ task, compact = false, dragHandleProps }) {
   const [editing, setEditing] = useState(false);
@@ -146,6 +154,18 @@ const TaskItem = memo(function TaskItem({ task, compact = false, dragHandleProps
               }
             />
           )}
+          {task.dueDate && (
+            <label className="task-time-chip" title={task.dueTime || 'Set time for alarm'}>
+              <Clock size={12} />
+              <input
+                type="time"
+                className="task-time-input"
+                value={task.dueTime || ''}
+                onChange={(e) => updateTask(task.id, { dueTime: e.target.value || null })}
+              />
+              {task.dueTime && <span className="task-time-value">{formatTime12h(task.dueTime)}</span>}
+            </label>
+          )}
           {!task.dueDate && !compact && (
             <DatePicker
               value={null}
@@ -265,14 +285,27 @@ const TaskItem = memo(function TaskItem({ task, compact = false, dragHandleProps
                 </span>
               )}
               <div className="subtask-actions">
+                <DatePicker
+                  value={st.dueDate || ''}
+                  onChange={(date) => updateSubtask(task.id, st.id, { dueDate: date || null })}
+                  trigger={
+                    <button className="subtask-date-btn" aria-label="Set due date" title={st.dueDate ? formatDate(st.dueDate) : 'Add date'}>
+                      {st.dueDate ? (
+                        <span className="subtask-date-chip">{formatDate(st.dueDate)}</span>
+                      ) : (
+                        <Calendar size={14} />
+                      )}
+                    </button>
+                  }
+                />
                 {idx > 0 && (
                   <button className="subtask-move-btn" onClick={() => moveSubtask(task.id, st.id, -1)} aria-label="Move up">
-                    <ChevronUp size={12} />
+                    <ChevronUp size={16} />
                   </button>
                 )}
                 {idx < task.subtasks.length - 1 && (
                   <button className="subtask-move-btn" onClick={() => moveSubtask(task.id, st.id, 1)} aria-label="Move down">
-                    <ChevronDown size={12} />
+                    <ChevronDown size={16} />
                   </button>
                 )}
                 <button

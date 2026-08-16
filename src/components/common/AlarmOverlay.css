@@ -1,0 +1,117 @@
+.alarm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 200ms ease-out;
+}
+
+.alarm-card {
+  background: var(--luma-bg-elevated);
+  border: 1px solid var(--luma-border-medium);
+  border-radius: var(--luma-radius-xl);
+  padding: var(--luma-space-8) var(--luma-space-6);
+  max-width: 360px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(108, 107, 240, 0.15);
+  animation: alarmPop 300ms var(--luma-ease-spring);
+}
+
+.alarm-icon-pulse {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--luma-accent-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--luma-space-4);
+  color: var(--luma-accent);
+  animation: alarmPulse 1s ease-in-out infinite;
+}
+
+.alarm-title {
+  font-size: var(--luma-text-sm);
+  color: var(--luma-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: var(--luma-font-medium);
+  margin-bottom: var(--luma-space-2);
+}
+
+.alarm-task-name {
+  font-size: var(--luma-text-xl);
+  color: var(--luma-text-primary);
+  font-weight: var(--luma-font-semibold);
+  line-height: var(--luma-leading-snug);
+  margin-bottom: var(--luma-space-1);
+}
+
+.alarm-time {
+  font-size: var(--luma-text-2xl);
+  color: var(--luma-accent-text);
+  font-weight: var(--luma-font-semibold);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--luma-space-6);
+}
+
+.alarm-actions {
+  display: flex;
+  gap: var(--luma-space-3);
+}
+
+.alarm-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--luma-space-2);
+  padding: var(--luma-space-3) var(--luma-space-4);
+  border-radius: var(--luma-radius-lg);
+  font-size: var(--luma-text-base);
+  font-weight: var(--luma-font-medium);
+  cursor: pointer;
+  transition: all 150ms ease;
+  min-height: 48px;
+}
+
+.alarm-btn-dismiss {
+  background: var(--luma-bg-hover);
+  color: var(--luma-text-secondary);
+  border: 1px solid var(--luma-border-medium);
+}
+
+.alarm-btn-dismiss:hover {
+  background: var(--luma-bg-active);
+  color: var(--luma-text-primary);
+}
+
+.alarm-btn-complete {
+  background: var(--luma-accent);
+  color: white;
+  border: none;
+}
+
+.alarm-btn-complete:hover {
+  background: var(--luma-accent-hover);
+}
+
+@keyframes alarmPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(108, 107, 240, 0.3); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 16px rgba(108, 107, 240, 0); }
+}
+
+@keyframes alarmPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

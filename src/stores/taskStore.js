@@ -17,6 +17,7 @@ export const useTaskStore = create(
           completed: false,
           priority: 'none',
           dueDate: null,
+          dueTime: null,
           projectId: null,
           listId: 'default',
           tags: [],
@@ -158,14 +159,16 @@ export const useTaskStore = create(
         if (uid && updatedTask) pushItem(uid, 'tasks', updatedTask);
       },
 
-      updateSubtask: (taskId, subtaskId, title) => {
+      updateSubtask: (taskId, subtaskId, updates) => {
         let updatedTask;
+        // updates can be: { title } or { dueDate } or { dueTime } or { reminderTime } or any combo
+        const updateObj = typeof updates === 'string' ? { title: updates } : updates;
         set(state => {
           const tasks = state.tasks.map(t => {
             if (t.id === taskId) {
               updatedTask = {
                 ...t,
-                subtasks: t.subtasks.map(st => st.id === subtaskId ? { ...st, title } : st),
+                subtasks: t.subtasks.map(st => st.id === subtaskId ? { ...st, ...updateObj } : st),
                 updatedAt: Date.now(),
               };
               return updatedTask;

@@ -205,7 +205,15 @@ body {
   }
 
   .subtask-actions {
-    opacity: 1; /* Always visible on touch */
+    opacity: 1;
+  }
+
+  .subtask-actions button {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .subtask-edit-input,
@@ -230,17 +238,6 @@ body {
   /* Settings mobile */
   .settings-export-grid {
     grid-template-columns: 1fr;
-  }
-
-  /* Dropdowns on mobile */
-  .dropdown-menu {
-    position: fixed;
-    bottom: calc(56px + env(safe-area-inset-bottom) + 8px);
-    left: var(--luma-space-3);
-    right: var(--luma-space-3);
-    top: auto;
-    max-width: none;
-    z-index: var(--luma-z-modal);
   }
 }
 

@@ -7,7 +7,8 @@ import { useProjectStore } from '../stores/projectStore';
 import { useListStore } from '../stores/listStore';
 import { useTagStore } from '../stores/tagStore';
 import {
-  pushAll, pullAll, subscribeToChanges, unsubscribeAll, mergeData, COLLECTIONS,
+  pushAll, pullAll, subscribeToChanges, unsubscribeAll,
+  mergeData, getTombstones, cleanOldTombstones, COLLECTIONS,
 } from '../lib/syncEngine';
 
 const STORE_MAP = {
@@ -19,8 +20,8 @@ const STORE_MAP = {
 };
 
 /**
- * Hook that manages sync lifecycle. Call this ONLY in App.jsx.
- * Other components should use useSyncStore() to read sync status.
+ * Hook that manages sync lifecycle. Call ONLY in App.jsx.
+ * Other components read sync status from useSyncStore().
  */
 export function useSync() {
   const { user } = useAuth();
@@ -54,83 +55,95 @@ export function useSync() {
     }
   }, []);
 
-  // Handle first login sync
-  const handleFirstLogin = useCallback(async (uid) => {
-    console.log('[Sync] Handling first login for', uid);
+  // Handle first login or returning user sync
+  const handleSync = useCallback(async (uid) => {
+    console.log('[Sync] Starting sync for', uid);
     setSyncStatus('syncing');
+
     try {
-      // Returning user — auto-merge (union, newer wins)
-      if (localStorage.getItem(`luma-synced-${uid}`)) {
-        console.log('[Sync] Returning user, auto-merging');
+      // Fetch tombstones (deletion records) from cloud
+      const tombstones = await getTombstones(uid);
+      console.log('[Sync] Fetched', tombstones.length, 'tombstones');
 
-        for (const [name, config] of Object.entries(STORE_MAP)) {
-          const localItems = config.getItems(config.store.getState());
-          const cloudItems = await pullAll(uid, name);
-
-          // Merge: union of both, newer updatedAt wins on conflicts
-          const merged = mergeData(localItems, cloudItems);
-          config.store.setState({ [name]: merged });
-
-          // Push merged result to cloud
-          if (merged.length > 0) await pushAll(uid, name, merged);
-        }
-
-        startRealtimeSync(uid);
-        return;
-      }
-
-      // Pull cloud data
-      const cloudData = {};
-      let hasCloudData = false;
-      for (const name of COLLECTIONS) {
-        const items = await pullAll(uid, name);
-        cloudData[name] = items;
-        if (items.length > 0) hasCloudData = true;
-      }
-      console.log('[Sync] Cloud data found:', hasCloudData);
+      // Check if returning user
+      const isReturningUser = !!localStorage.getItem(`luma-synced-${uid}`);
 
       // Get local data
       const localData = {};
       let hasLocalData = false;
       for (const [name, config] of Object.entries(STORE_MAP)) {
-        const items = config.getItems(config.store.getState());
-        localData[name] = items;
-        if (items.length > 0) hasLocalData = true;
+        localData[name] = config.getItems(config.store.getState());
+        if (localData[name].length > 0) hasLocalData = true;
       }
-      console.log('[Sync] Local data found:', hasLocalData);
 
-      if (hasCloudData && hasLocalData) {
-        // First time — show merge dialog
-        console.log('[Sync] Both have data, showing merge dialog');
-        setMergeData({ localData, cloudData });
+      // Get cloud data
+      const cloudData = {};
+      let hasCloudData = false;
+      for (const name of COLLECTIONS) {
+        cloudData[name] = await pullAll(uid, name);
+        if (cloudData[name].length > 0) hasCloudData = true;
+      }
+
+      console.log('[Sync] Local:', hasLocalData, '| Cloud:', hasCloudData, '| Returning:', isReturningUser);
+
+      if (isReturningUser) {
+        // ── Returning user: auto-merge with tombstone awareness ──
+        console.log('[Sync] Auto-merging with tombstone checking');
+        for (const name of COLLECTIONS) {
+          const merged = mergeData(
+            localData[name] || [],
+            cloudData[name] || [],
+            tombstones,
+            name
+          );
+          STORE_MAP[name].store.setState({ [name]: merged });
+          if (merged.length > 0) await pushAll(uid, name, merged);
+        }
+        startRealtimeSync(uid);
+
+      } else if (hasCloudData && hasLocalData) {
+        // ── First login with both data: show merge dialog ──
+        console.log('[Sync] First login, both have data — showing merge dialog');
+        setMergeData({ localData, cloudData, tombstones });
         setShowMergeDialog(true);
         setSyncStatus('idle');
-      } else if (hasLocalData && !hasCloudData) {
+        return; // Don't set synced flag yet — wait for user decision
+
+      } else if (hasLocalData) {
+        // ── First login, only local data: push to cloud ──
         console.log('[Sync] Pushing local data to cloud');
         for (const [name, items] of Object.entries(localData)) {
           if (items.length > 0) await pushAll(uid, name, items);
         }
-        localStorage.setItem(`luma-synced-${uid}`, 'true');
         startRealtimeSync(uid);
-      } else if (hasCloudData && !hasLocalData) {
+
+      } else if (hasCloudData) {
+        // ── First login, only cloud data: pull to local ──
         console.log('[Sync] Pulling cloud data to local');
         applyCloudData(cloudData);
-        localStorage.setItem(`luma-synced-${uid}`, 'true');
         startRealtimeSync(uid);
+
       } else {
+        // ── Both empty ──
         console.log('[Sync] Both empty, starting listeners');
-        localStorage.setItem(`luma-synced-${uid}`, 'true');
         startRealtimeSync(uid);
       }
+
+      // Mark as synced
+      localStorage.setItem(`luma-synced-${uid}`, 'true');
+
+      // Clean old tombstones (background, non-blocking)
+      cleanOldTombstones(uid).catch(() => {});
+
     } catch (err) {
-      console.error('[Sync] First login error:', err);
+      console.error('[Sync] Sync error:', err);
       setSyncStatus('error');
     }
   }, [setSyncStatus, setShowMergeDialog, setMergeData, startRealtimeSync, applyCloudData]);
 
   // Handle merge decision from dialog
   const handleMerge = useCallback(async (decision) => {
-    const mergeData_ = useSyncStore.getState().mergeData;
+    const { mergeData: mergeData_, ...rest } = useSyncStore.getState();
     if (!user || !mergeData_) return;
 
     console.log('[Sync] Merge decision:', decision);
@@ -138,11 +151,17 @@ export function useSync() {
     setShowMergeDialog(false);
 
     try {
-      const { localData, cloudData } = mergeData_;
+      const { localData, cloudData, tombstones = [] } = mergeData_;
 
       if (decision === 'merge') {
+        // Union of both, tombstone-aware
         for (const name of COLLECTIONS) {
-          const merged = mergeData(localData[name] || [], cloudData[name] || []);
+          const merged = mergeData(
+            localData[name] || [],
+            cloudData[name] || [],
+            tombstones,
+            name
+          );
           STORE_MAP[name].store.setState({ [name]: merged });
           await pushAll(user.uid, name, merged);
         }
@@ -150,7 +169,7 @@ export function useSync() {
         applyCloudData(cloudData);
       } else if (decision === 'local') {
         for (const [name, items] of Object.entries(localData)) {
-          await pushAll(user.uid, name, items);
+          if (items.length > 0) await pushAll(user.uid, name, items);
         }
       }
 
@@ -161,14 +180,14 @@ export function useSync() {
       setSyncStatus('error');
     }
 
-    setMergeData(null);
-  }, [user, setSyncStatus, setShowMergeDialog, setMergeData, startRealtimeSync, applyCloudData]);
+    useSyncStore.getState().setMergeData(null);
+  }, [user, setSyncStatus, setShowMergeDialog, startRealtimeSync, applyCloudData]);
 
-  // React to auth changes — only run once per user change
+  // React to auth changes
   useEffect(() => {
     if (user && !initRef.current) {
       initRef.current = true;
-      handleFirstLogin(user.uid);
+      handleSync(user.uid);
     } else if (!user) {
       initRef.current = false;
       unsubscribeAll();
@@ -176,15 +195,9 @@ export function useSync() {
     }
 
     return () => {
-      if (!user) {
-        unsubscribeAll();
-      }
+      if (!user) unsubscribeAll();
     };
-  }, [user, handleFirstLogin, setSyncStatus]);
+  }, [user, handleSync, setSyncStatus]);
 
-  return {
-    syncStatus,
-    showMergeDialog,
-    handleMerge,
-  };
+  return { syncStatus, showMergeDialog, handleMerge };
 }
