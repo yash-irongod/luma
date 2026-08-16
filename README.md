@@ -10,7 +10,7 @@
 
 <p align="center">
   Notes, tasks, and projects in one beautiful dark-mode interface — inspired by the best of Notion, Todoist, and Linear.<br />
-  <em>No sign-ups. No subscriptions. Just open and start working.</em>
+  <em>Works offline. Syncs across devices. No subscriptions.</em>
 </p>
 
 <p align="center">
@@ -23,6 +23,8 @@
   <img src="https://img.shields.io/badge/license-MIT-8B5CF6?style=flat-square" alt="License: MIT" />
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite 8" />
+  <img src="https://img.shields.io/badge/Firebase-Auth%20%2B%20Firestore-FFCA28?style=flat-square&logo=firebase&logoColor=black" alt="Firebase" />
+  <img src="https://img.shields.io/badge/PWA-Installable-5A0FC8?style=flat-square&logo=pwa&logoColor=white" alt="PWA" />
   <img src="https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Deployed on Vercel" />
 </p>
 
@@ -31,6 +33,7 @@
   <a href="#-screenshots">Screenshots</a> ·
   <a href="#-tech-stack">Tech Stack</a> ·
   <a href="#-getting-started">Getting Started</a> ·
+  <a href="#-architecture">Architecture</a> ·
   <a href="#-license">License</a>
 </p>
 
@@ -61,8 +64,6 @@
   </tr>
 </table>
 
-<!-- Drop your actual screenshots into public/screenshots/ using the filenames above (or update the paths to match your own). -->
-
 ---
 
 ## ✨ Features
@@ -82,8 +83,10 @@
 - **Multiple task lists** — Tasks, Work, Personal (+ create your own)
 - **Smart views** — My Day, All Tasks, By Priority, By Date
 - **4 sort modes** — Priority, Due date, Alphabetical, Created
-- **Subtasks** — add, check off, and remove within any task
-- **Custom DatePicker** — quick options (Today, Tomorrow, Next Week) + full calendar grid
+- **Subtasks** — with individual due dates and reordering
+- **Due dates + times** — custom DatePicker with quick options + full calendar
+- **⏰ Alarms & reminders** — in-app alarm overlay with sound + vibration when tasks are due
+- **Browser notifications** — reminders even when the tab is in background
 - **Priority levels** — Urgent, High, Medium, Low, None (color-coded)
 - **Recurring tasks** — Daily, Weekly, Monthly with auto-creation on completion
 - **My Day** — focus flag to plan what you'll work on today
@@ -101,13 +104,28 @@
 - **Command palette** (`Ctrl+K` / `⌘K`) for quick navigation
 - **Collapsible sidebar** with lists, projects, and quick links
 
+### 🔄 Cloud Sync
+- **Google sign-in** — one-tap authentication via Firebase
+- **Real-time sync** across all your devices via Firestore
+- **Tombstone-based deletion tracking** — deleted items stay deleted across devices (no ghost data)
+- **Smart auto-merge** — edits from offline devices merge intelligently (newer version wins)
+- **First-login merge dialog** — choose to merge, keep local, or keep cloud on first sync
+- **Works offline** — full functionality without internet, syncs when reconnected
+
 ### 💾 Data & Export
-- **Instant access** — no accounts, no sign-ups, no waiting
+- **Instant access** — no accounts required to start (sign in later to sync)
 - **Local storage** — your data is saved in your browser automatically
 - **Full JSON backup** — export/import everything
 - **Notes as Markdown** — bulk export all notes
 - **Tasks as CSV** — open in Excel, Google Sheets, etc.
 - **Storage meter** — see how much space you're using
+
+### 📱 Mobile Experience
+- **Installable PWA** — add to home screen on iOS/Android
+- **Bottom sheet menus** — native-feeling slide-up panels on mobile
+- **Touch-optimized** — 44px minimum touch targets
+- **Portrait lock** — consistent mobile experience
+- **No auto-rotation** override issues
 
 ### 🎨 Design
 - **Premium dark theme** with custom design tokens
@@ -115,7 +133,7 @@
 - **Smooth animations** via Motion (Framer Motion)
 - **Custom scrollbars**, focus rings, and selection colors
 - **Inter font** from Google Fonts
-- **Responsive** — works on desktop and tablet
+- **Responsive** — works on desktop, tablet, and mobile
 
 ---
 
@@ -126,6 +144,8 @@
 | **Framework** | React 19 + Vite 8 |
 | **State** | Zustand 5 with `persist` middleware |
 | **Editor** | TipTap 3 (ProseMirror) |
+| **Auth** | Firebase Auth (Google sign-in) |
+| **Database** | Cloud Firestore (real-time sync) |
 | **Routing** | React Router 7 |
 | **Animations** | Motion 12 (Framer Motion) |
 | **Icons** | Lucide React |
@@ -133,6 +153,7 @@
 | **Dates** | date-fns 4 |
 | **IDs** | nanoid |
 | **Command Palette** | cmdk |
+| **PWA** | vite-plugin-pwa |
 | **Hosting** | Vercel |
 
 ---
@@ -175,21 +196,52 @@ The project includes a `vercel.json` with SPA routing, asset caching, and securi
 
 ---
 
+## 🏗️ Architecture
+
+### Sync Protocol
+
+Luma uses a **tombstone-based sync protocol** to keep data consistent across devices:
+
+```
+┌──────────────┐    push/pull     ┌──────────────┐
+│  Zustand     │ ◄──────────────► │  Firestore   │
+│  (localStorage) │               │  (cloud)     │
+└──────┬───────┘                  └──────┬───────┘
+       │                                 │
+       │  onSnapshot (real-time)         │
+       ◄─────────────────────────────────┘
+```
+
+- **Writes**: Local-first (instant), then debounced push to Firestore
+- **Reads**: Real-time via `onSnapshot` listeners
+- **Conflicts**: Last-write-wins by `updatedAt` timestamp
+- **Deletions**: Tombstone records prevent deleted items from resurrecting when offline devices reconnect
+- **Merge**: Auto-merge for returning users; 3-option dialog only on first-ever login
+
+### Reminder System
+
+- Tasks with a `dueTime` schedule a `setTimeout` reminder
+- When fired: in-app alarm overlay (Web Audio API tones + vibration) + browser `Notification`
+- Reminders re-schedule whenever tasks change
+
+---
+
 ## 📂 Project Structure
 
 ```
 src/
 ├── components/
 │   ├── command/       # Command palette (Ctrl+K)
-│   ├── common/        # Button, Modal, DatePicker, Toast, Dropdown, etc.
+│   ├── common/        # Button, Modal, DatePicker, Toast, Dropdown, AlarmOverlay
 │   ├── home/          # Dashboard widgets
-│   ├── layout/        # Sidebar, TopBar, PageContainer
+│   ├── layout/        # Sidebar, TopBar, MobileNav, PageContainer
 │   ├── notes/         # NoteEditor, NoteCard, BubbleMenu, SlashCommands
 │   ├── projects/      # ProjectCard, ProjectForm
 │   └── tasks/         # TaskItem, TaskInput, TaskGroup (with DnD)
-├── hooks/             # useAutoSave, useKeyboardShortcuts, useSearch
-├── pages/             # HomePage, NotesPage, TasksPage, SettingsPage, etc.
-├── stores/            # Zustand stores (tasks, notes, projects, lists, tags, ui)
+├── hooks/             # useAuth, useSync, useAutoSave, useKeyboardShortcuts, useSearch
+├── lib/               # firebase, syncEngine, reminderEngine
+├── pages/             # HomePage, NotesPage, TasksPage, SettingsPage, TrashPage
+├── stores/            # Zustand stores (tasks, notes, projects, lists, tags, ui, sync)
 ├── styles/            # Design tokens, reset, animations, editor styles
 └── utils/             # Constants, date helpers, ID generator, search
 ```
@@ -209,12 +261,14 @@ src/
 
 ## 📋 Data & Privacy
 
-Luma stores data in your browser's `localStorage`. No accounts required — your workspace is ready the moment you open the app.
+Luma stores data locally in `localStorage` by default. Sign in with Google to enable cross-device sync via Firestore.
 
-- ✅ No sign-ups, no passwords, no emails
+- ✅ Works without an account — your workspace is ready instantly
+- ✅ Sign in to sync across devices (optional)
 - ✅ Data persists across browser sessions
 - ✅ Export everything as JSON, Markdown, or CSV anytime
-- ⚠️ Clearing browser data erases your workspace — keep backups!
+- ✅ Tombstone-based sync ensures deletions propagate correctly
+- ⚠️ Clearing browser data erases local workspace — keep backups or sign in to sync!
 
 ---
 
@@ -225,7 +279,7 @@ MIT — see [LICENSE](./LICENSE)
 ---
 
 <p align="center">
-  Built with React, Zustand, and TipTap — and a lot of ♥
+  Built with React, Zustand, TipTap, and Firebase — and a lot of ♥
 </p>
 
 <p align="center">
