@@ -196,7 +196,13 @@ body {
   }
 
   .task-drag-handle {
-    display: none; /* No drag on mobile */
+    opacity: 1;
+    display: flex;
+    min-width: 28px;
+    min-height: 28px;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
   }
 
   .task-meta {
