@@ -279,12 +279,20 @@ const TaskItem = memo(function TaskItem({ task, compact = false, dragHandleProps
               ) : (
                 <span
                   className="subtask-title"
-                  onDoubleClick={() => { setEditingSubtaskId(st.id); setEditSubtaskTitle(st.title); }}
+                  onClick={() => { setEditingSubtaskId(st.id); setEditSubtaskTitle(st.title); }}
                 >
                   {st.title}
                 </span>
               )}
               <div className="subtask-actions">
+                <button
+                  className="subtask-move-btn"
+                  onClick={() => { setEditingSubtaskId(st.id); setEditSubtaskTitle(st.title); }}
+                  aria-label="Edit subtask"
+                  title="Edit"
+                >
+                  <Pencil size={13} />
+                </button>
                 <DatePicker
                   value={st.dueDate || ''}
                   onChange={(date) => updateSubtask(task.id, st.id, { dueDate: date || null })}

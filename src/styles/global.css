@@ -66,6 +66,14 @@ body {
   transition: margin-left 300ms var(--luma-ease-out);
 }
 
+.app-main.sidebar-collapsed {
+  margin-left: 56px;
+}
+
+.app-main.sidebar-expanded {
+  margin-left: 260px;
+}
+
 /* Page container */
 .page-container {
   max-width: 960px;
@@ -198,6 +206,11 @@ body {
   /* Subtasks mobile */
   .subtask-list {
     padding-left: calc(18px + var(--luma-space-2));
+  }
+
+  .subtask-title {
+    white-space: normal;
+    word-break: break-word;
   }
 
   .subtask-add {

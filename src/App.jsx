@@ -50,8 +50,7 @@ export default function App() {
       <Sidebar />
       <MobileNav />
       <main
-        className="app-main"
-        style={{ marginLeft: sidebarCollapsed ? 56 : 260 }}
+        className={`app-main ${sidebarCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'}`}
       >
         <Outlet />
       </main>

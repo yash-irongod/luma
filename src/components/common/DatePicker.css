@@ -187,3 +187,59 @@
 .date-picker-clear:hover {
   color: var(--luma-danger);
 }
+
+/* ─── Mobile Bottom Sheet ─────────────────────────── */
+
+.date-picker-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: var(--luma-z-modal);
+  display: flex;
+  align-items: flex-end;
+  animation: fadeIn 150ms ease-out;
+}
+
+.date-picker-bottom-sheet {
+  width: 100%;
+  background: var(--luma-bg-elevated);
+  border-top-left-radius: var(--luma-radius-xl);
+  border-top-right-radius: var(--luma-radius-xl);
+  padding: var(--luma-space-2) var(--luma-space-4) calc(var(--luma-space-6) + env(safe-area-inset-bottom));
+  animation: slideUp 200ms var(--luma-ease-out);
+}
+
+.date-picker-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--luma-text-ghost);
+  border-radius: var(--luma-radius-full);
+  margin: var(--luma-space-1) auto var(--luma-space-3);
+}
+
+.date-picker-bottom-sheet .date-picker-quick-btn {
+  padding: 8px 14px;
+  font-size: var(--luma-text-sm);
+}
+
+.date-picker-bottom-sheet .date-picker-day {
+  width: 40px;
+  height: 40px;
+  font-size: var(--luma-text-sm);
+}
+
+.date-picker-bottom-sheet .date-picker-nav button {
+  width: 40px;
+  height: 40px;
+}
+
+.date-picker-bottom-sheet .date-picker-clear {
+  padding: 12px 6px;
+  font-size: var(--luma-text-sm);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
